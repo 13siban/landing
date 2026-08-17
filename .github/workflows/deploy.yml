@@ -1,0 +1,47 @@
+name: Deploy landing
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# 동시에 여러 배포가 겹쳐 rsync가 섞이지 않도록
+concurrency:
+  group: deploy-landing
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: SSH 키 준비
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          # 호스트 키를 고정해서 중간자 공격 차단 (ssh-keyscan 대신)
+          echo "${{ vars.DEPLOY_HOST }} ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHTHb5DjE8DWi46veUeN7AZ/VSBOv9FRHRzvYUbZNKsg" > ~/.ssh/known_hosts
+
+      # 서버 쪽 키는 rrsync로 /var/www/landing 에 가둬져 있어서
+      # 목적지가 절대경로가 아니라 제한 디렉토리의 루트(:/)가 된다
+      - name: 배포
+        run: |
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            dist/ youngdeploy@${{ vars.DEPLOY_HOST }}:/
+
+      - name: 배포 확인
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://mymyy.com/landing/)
+          echo "https://mymyy.com/landing/ -> $code"
+          test "$code" = "200"
