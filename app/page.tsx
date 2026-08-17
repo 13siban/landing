@@ -21,10 +21,7 @@ const projects = [
 
 export default function Home() {
   return (
-    <main
-      className="min-h-screen bg-neutral-950 text-neutral-100"
-      data-build="e2e-1786983154"
-    >
+    <main className="min-h-screen bg-neutral-950 text-neutral-100">
       <div className="mx-auto max-w-3xl px-6 py-24">
         <p className="text-sm font-medium tracking-widest text-neutral-500 uppercase">
           Full-stack Developer
