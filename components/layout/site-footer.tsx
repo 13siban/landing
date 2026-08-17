@@ -1,4 +1,4 @@
-import { Diamond } from "./icons";
+import { Diamond } from "@/components/icons";
 
 const social = ["Instagram", "TikTok", "X", "Substack"];
 const legal = ["Careers", "Terms", "Privacy"];
@@ -21,7 +21,7 @@ function LinkRow({ items }: { items: string[] }) {
 
 export function SiteFooter() {
   return (
-    <footer className="flex flex-col gap-12 overflow-hidden pb-0">
+    <footer className="flex flex-col gap-12 overflow-hidden">
       {/* 데스크톱은 좌 소셜 / 중앙 마크 / 우 법적고지 3분할, 모바일은 세로 스택 */}
       <div className="flex flex-col items-center gap-6 px-5 sm:px-8 md:flex-row md:justify-between lg:px-20">
         <LinkRow items={social} />
