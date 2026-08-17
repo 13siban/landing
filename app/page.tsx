@@ -1,25 +1,25 @@
 const projects = [
   {
-    name: '아늑 (Anook)',
-    desc: '1인 가구를 위한 주거 커뮤니티 · RAG 기반 AI 상담',
-    stack: ['Next.js', 'Spring Boot', 'FastAPI', 'pgvector'],
-    href: 'https://anook.mymyy.com',
+    name: "아늑 (Anook)",
+    desc: "1인 가구를 위한 주거 커뮤니티 · RAG 기반 AI 상담",
+    stack: ["Next.js", "Spring Boot", "FastAPI", "pgvector"],
+    href: "https://anook.mymyy.com",
   },
   {
-    name: '베뉴온 (Venueon)',
-    desc: '공간 대여 · 이벤트 예약 플랫폼',
-    stack: ['Next.js', 'Spring Boot', 'MySQL'],
-    href: 'https://venueon.mymyy.com',
+    name: "베뉴온 (Venueon)",
+    desc: "공간 대여 · 이벤트 예약 플랫폼",
+    stack: ["Next.js", "Spring Boot", "MySQL"],
+    href: "https://venueon.mymyy.com",
   },
   {
-    name: 'ncafe',
-    desc: '카페 커뮤니티 서비스',
-    stack: ['Next.js', 'Spring Boot'],
-    href: 'https://mymyy.com',
+    name: "ncafe",
+    desc: "카페 커뮤니티 서비스",
+    stack: ["Next.js", "Spring Boot"],
+    href: "https://mymyy.com",
   },
-]
+];
 
-function App() {
+export default function Home() {
   return (
     <main className="min-h-screen bg-neutral-950 text-neutral-100">
       <div className="mx-auto max-w-3xl px-6 py-24">
@@ -66,7 +66,5 @@ function App() {
         </footer>
       </div>
     </main>
-  )
+  );
 }
-
-export default App

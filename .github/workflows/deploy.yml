@@ -38,7 +38,7 @@ jobs:
         run: |
           rsync -az --delete \
             -e "ssh -i ~/.ssh/deploy_key" \
-            dist/ youngdeploy@${{ vars.DEPLOY_HOST }}:/
+            out/ youngdeploy@${{ vars.DEPLOY_HOST }}:/
 
       - name: 배포 확인
         run: |

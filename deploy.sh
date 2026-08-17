@@ -9,6 +9,6 @@ DEST=/var/www/landing/
 cd "$(dirname "$0")"
 
 npm run build
-rsync -az --delete -e "ssh -i $KEY -o StrictHostKeyChecking=no" dist/ "$SERVER:$DEST"
+rsync -az --delete -e "ssh -i $KEY -o StrictHostKeyChecking=no" out/ "$SERVER:$DEST"
 
 echo "배포 완료 → https://mymyy.com/landing/"
