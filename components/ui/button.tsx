@@ -25,16 +25,21 @@ export function Button({
   variant = "solid",
   size = "md",
   className = "",
+  target,
 }: {
   children: React.ReactNode;
   href?: string;
   variant?: Variant;
   size?: Size;
   className?: string;
+  target?: "_blank";
 }) {
   return (
     <a
       href={href}
+      target={target}
+      // target="_blank"에서 새 창이 window.opener를 통해 원 페이지를 조작하지 못하게 막는다.
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
       className={`inline-flex items-center justify-center font-semibold transition-opacity hover:opacity-85 ${variants[variant]} ${sizes[size]} ${className}`}
     >
       {children}

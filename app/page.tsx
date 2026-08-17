@@ -13,8 +13,10 @@ const modeCards = ["By color", "by visual similarity", "and without AI."];
 export default function Home() {
   return (
     <>
-      {/* ---------- Section 1 · Hero ---------- */}
-      <section className="flex min-h-[560px] flex-col items-center justify-between gap-16 pt-20 pb-12 sm:pt-30 lg:min-h-[900px]">
+      <section className="flex min-h-[560px] flex-col items-center justify-between gap-16 pb-12 lg:min-h-[900px]">
+        {/* 위쪽 간격을 아래쪽 간격과 강제로 맞추기 위한 투명 스페이서 */}
+        <div aria-hidden className="w-full" />
+
         <div className={`flex max-w-[800px] flex-col items-center gap-6 ${container}`}>
           <p className="text-sm font-bold text-fg-muted">TITLE</p>
           <h1 className="text-center font-semibold text-balance text-fg text-hero">
@@ -24,7 +26,13 @@ export default function Home() {
           </h1>
           <div className="flex flex-wrap justify-center gap-4 pt-2">
             <Button>Sign up</Button>
-            <Button variant="outline">Get the app</Button>
+            <Button
+              variant="outline"
+              href="https://www.figma.com/design/tqf7pektXZ4DTLj1vOSyoI/website-landing?node-id=3-100&t=eU5NuGHug2Pcn3cY-1"
+              target="_blank"
+            >
+              Go To Figma
+            </Button>
           </div>
         </div>
 
@@ -63,10 +71,23 @@ export default function Home() {
             Every search opens a new world.
           </h2>
 
-          <div className="relative aspect-[65/27] min-h-[300px] w-full overflow-hidden rounded-lg bg-panel">
-            {/* 3분할 이미지 자리. Figma상 1열만 상단 정렬, 2·3열은 중앙 정렬. */}
-            <div className="absolute inset-0 flex">
-              <div className="flex flex-1 items-start justify-start">
+          <div className="relative aspect-[6/5] w-full overflow-hidden rounded-lg bg-panel sm:aspect-[65/27] sm:min-h-[300px]">
+            {/*
+             * 모바일: 3장을 세로로 쌓아 가운데 것만 온전히 보이고 위/아래는
+             * 패널 밖으로 잘려 보이게 한다. 세 블록 높이 합이 패널 높이보다
+             * 크게 잡혀 있어서(gap 포함 총합 > 100%) justify-center가 스택
+             * 전체를 가운데 정렬하면서 위아래가 대칭으로 넘쳐 overflow-hidden에
+             * 잘린다. 블록끼리는 gap으로 실제 여백을 둬서 하나로 안 붙어 보이게 한다.
+             */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 sm:hidden">
+              <div className="aspect-square w-[40%] shrink-0 bg-placeholder" />
+              <div className="aspect-square w-[48%] shrink-0 bg-placeholder" />
+              <div className="aspect-square w-[40%] shrink-0 bg-placeholder" />
+            </div>
+
+            {/* sm 이상: 3분할 가로 배치. Figma상 1열만 상단 정렬, 2·3열은 중앙 정렬. */}
+            <div className="absolute inset-0 hidden sm:flex">
+              <div className="flex flex-1 items-center justify-center">
                 <div className="h-[52%] w-[46%] bg-placeholder" />
               </div>
               <div className="flex flex-1 items-center justify-center">
@@ -76,6 +97,7 @@ export default function Home() {
                 <div className="h-[48%] w-[42%] bg-placeholder" />
               </div>
             </div>
+
             {/* 검색 pill은 다크 패널 정중앙에 겹쳐 놓인다 (Figma 좌표 기준). */}
             <div className="absolute inset-0 grid place-items-center px-5">
               <SearchPill placeholder="your context in here" />
@@ -127,7 +149,7 @@ export default function Home() {
       <section className="py-20 lg:py-30">
         {/* 데스크톱 3단(420/420/420, gap 64) → 좁아지면 세로 스택 */}
         <div className="mx-auto flex w-full max-w-[1388px] flex-col items-center gap-10 px-5 sm:px-8 lg:flex-row lg:justify-center lg:gap-16 lg:px-10">
-          <h2 className="w-full font-semibold text-fg text-section lg:max-w-[420px] lg:text-right">
+          <h2 className="w-full text-center font-semibold text-fg text-section lg:max-w-[420px] lg:text-right">
             Know what
             <br />
             you&apos;re
@@ -146,7 +168,7 @@ export default function Home() {
             </div>
           </div>
 
-          <p className="w-full text-md leading-[1.625] font-normal text-fg-muted lg:max-w-[420px]">
+          <p className="w-full text-center text-md leading-[1.625] font-normal text-fg-muted lg:max-w-[420px] lg:text-left">
             Company researches images—surfacing the artist, source, and story.
           </p>
         </div>
@@ -155,11 +177,17 @@ export default function Home() {
       {/* ---------- Section 6 · Logos ---------- */}
       <section className="py-20 lg:py-30">
         <div className={`flex flex-col items-center gap-10 ${container}`}>
-          <h2 className="max-w-[525px] text-[clamp(1.5rem,1rem+1.6vw,2rem)] leading-[1.3] font-semibold text-fg">
+          <h2 className="max-w-[600px] text-[clamp(1.5rem,1rem+1.6vw,2rem)] leading-[1.3] font-semibold text-fg">
             They are our collaborative partner.
           </h2>
-          {/* 10개 + 9개 두 줄. 좁아지면 자연스럽게 줄바꿈된다. */}
-          <div className="flex max-w-[1144px] flex-wrap justify-center gap-4">
+          {/*
+           * 10개 + 9개 두 줄. 좁아지면 자연스럽게 줄바꿈된다.
+           * 좌우 끝을 배경색으로 페이드아웃시키는 마스크 — 두 줄 모두에 동일하게
+           * 걸리도록 개별 로고가 아니라 이 박스 전체에 마스크를 적용한다.
+           */}
+          <div
+            className="flex w-full max-w-[1144px] flex-wrap justify-center gap-4 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+          >
             {Array.from({ length: 19 }, (_, i) => (
               <div
                 key={i}
